@@ -156,23 +156,23 @@ module MagickTitle
       def title_command_string(file="")
         require 'shellwords'
         text = Shellwords.escape(@text.gsub("'", "\\'"))
-        opts = %(
-          -antialias
-          -background '#{options.background_color}#{options.background_alpha}'
-          -fill '#{options.color}'
-          -font #{options.font_path}/#{options.font}
-          -pointsize #{options.font_size}
-          -size #{options.width}x#{options.height}
-          -weight #{options.weight}
-          -kerning #{options.kerning}
-          caption:'#{text}'
-          #{file}
-        ).split("\n")
+        opts = [
+          "-antialias",
+          "-background '#{options.background_color}#{options.background_alpha}'",
+          "-fill '#{options.color}'",
+          "-font #{options.font_path}/#{options.font}",
+          "-pointsize #{options.font_size}",
+          "-size #{options.width}x#{options.height}",
+          "-weight #{options.weight}",
+          "-kerning #{options.kerning}",
+          "caption:'#{text}'",
+          "#{file}"
+        ]
         
         opts.unshift "-trim" unless 0 < options.height.to_i
         opts.unshift "-interline-spacing #{options.line_height}" unless 0 == options.line_height.to_i
         
-        opts.join(" ").gsub(/\s+/, ' ')
+        opts.join(" ")
       end
       
             
