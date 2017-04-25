@@ -129,7 +129,7 @@ module MagickTitle
       
     def convert_command
       command = cmd('convert', title_command_string(fullpath))
-      %(echo "#{@text.gsub('"', '\\"')}" | #{command}).strip
+      %(#{command}).strip
     end
     
     
@@ -154,6 +154,8 @@ module MagickTitle
       
       # builds an imagemagick command based on the supplied options 
       def title_command_string(file="")
+        require 'shellwords'
+        text = Shellwords.escape(@text.gsub("'", "\\'"))
         opts = %(
           -antialias
           -background '#{options.background_color}#{options.background_alpha}'
@@ -163,7 +165,7 @@ module MagickTitle
           -size #{options.width}x#{options.height}
           -weight #{options.weight}
           -kerning #{options.kerning}
-          caption:@-
+          caption:'#{text}'
           #{file}
         ).split("\n")
         
