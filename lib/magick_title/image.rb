@@ -178,7 +178,7 @@ module MagickTitle
             
       # Cleans and runs the supplied command
       def cmd(command, params)
-        [path_for_command(command), params.to_s.gsub(/\\|\n|\r/, '')].join(" ")
+        [path_for_command(command), params.to_s].join(" ")
       end 
       
       
