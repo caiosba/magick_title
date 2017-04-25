@@ -155,7 +155,7 @@ module MagickTitle
       # builds an imagemagick command based on the supplied options 
       def title_command_string(file="")
         require 'shellwords'
-        text = Shellwords.escape(@text.gsub("'", "\\'"))
+        text = Shellwords.escape(@text.gsub("'", "\\'")).gsub("'\n'", "\n")
         opts = [
           "-antialias",
           "-background '#{options.background_color}#{options.background_alpha}'",
